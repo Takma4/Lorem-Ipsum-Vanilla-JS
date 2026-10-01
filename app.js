@@ -11,3 +11,49 @@ I just told you! You've killed me! Fry! Quit doing the right thing, you jerk! Mi
   `Man braid celiac synth freegan readymade, pitchfork fam salvia waistcoat lomo bitters gentrify four loko. Pitchfork semiotics post-ironic vegan. Tofu meditation microdosing hashtag semiotics venmo. Flexitarian vape tilde taiyaki. Prism poutine farm-to-table, messenger bag vegan taxidermy tattooed sartorial squid jean shorts fixie selvage trust fund vape.`,
   `Rutters Plate Fleet boom chandler Brethren of the Coast handsomely lookout marooned brigantine knave. Buccaneer gangway jack rum loot spyglass line Jack Tar fore gaff. Gaff topmast scuttle ballast swab draught measured fer yer chains dance the hempen jig Chain Shot yardarm.`,
 ];
+
+// Select elements
+const form = document.querySelector("form");
+const numberInput = document.querySelector("#paragraphs");
+const result = document.querySelector(".result");
+
+// Add form submit event listener
+form.addEventListener("submit", (e) => {
+  // Prevents the page from reloading after from submit
+  e.preventDefault();
+
+  const numberOfParagraphs = numberInput.valueAsNumber;
+  if (isNaN(numberOfParagraphs) || numberOfParagraphs <= 0) {
+    // Clear the result if the number input's value is not a number
+    result.textContent = "";
+    return;
+  }
+
+  let lorem = "";
+  // If we're requesting less (or equal) paragraphs than our lorem array
+  // then just take each element from the array one-by-one
+  if (numberOfParagraphs <= text.length) {
+    for (let i = 0; i < numberOfParagraphs; i++) {
+      lorem += `${text[i]}<br><br>`;
+    }
+  } else {
+    // If we're requesting more paragraphs than our lorem array,
+    // then display all of them one-by-one
+    for (let i = 0; i < text.length; i++) {
+      lorem += `${text[i]}<br><br>`;
+    }
+
+    // And for the rest of the paragraphs, generate a random one
+    // from the array
+    for (let i = text.length; i < numberOfParagraphs; i++) {
+      const randomNumber = Math.floor(Math.random() * text.length);
+      const rand = text[randomNumber];
+
+      lorem += `${rand}<br><br>`;
+    }
+  }
+
+  // We're setting the innerHTML instead of the textContent
+  // because we're using line breaks (<br>)
+  result.innerHTML = lorem;
+});
